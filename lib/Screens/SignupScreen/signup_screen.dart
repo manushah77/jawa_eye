@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:jawa_eye/Constant/color.dart';
+import 'package:jawa_eye/Screens/LoginScreen/login_screen.dart';
+import 'package:jawa_eye/main.dart';
+import 'package:jawa_eye/models/user_auth_response.dart';
+import 'package:jawa_eye/providers/auth_provider.dart';
+import 'package:jawa_eye/providers/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
 
 import '../widget/custom_button.dart';
 
@@ -16,6 +21,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   TextEditingController emailC = TextEditingController();
   TextEditingController passwordC = TextEditingController();
+  TextEditingController usernameC = TextEditingController();
   bool ispasswordvisible = true;
   bool ispasswordvisibleTwo = true;
   bool _isChecked = false;
@@ -44,7 +50,7 @@ class _SignupScreenState extends State<SignupScreen> {
             Container(
               height: 535.h,
               width: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.black54,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30),
@@ -56,8 +62,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(
                     height: 30.h,
                   ),
-                  Text(
-                    'Registration Via Email',
+                  const Text(
+                    'Registration Via Email/Phone',
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   SizedBox(
@@ -66,28 +72,29 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(
                     width: 280.w,
                     child: TextFormField(
-                      decoration: InputDecoration(
+                      controller: emailC,
+                      decoration: const InputDecoration(
                         border: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1,
-                            )),
+                          color: Colors.white,
+                          width: 1,
+                        )),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1,
-                            )),
+                          color: Colors.white,
+                          width: 1,
+                        )),
                         enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1,
-                            )),
-                        hintText: 'Enter your email address',
+                          color: Colors.white,
+                          width: 1,
+                        )),
+                        hintText: 'Enter your active email address or phone number',
                         hintStyle: TextStyle(
                           color: Colors.white38,
                         ),
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                       cursorColor: Colors.white,
@@ -99,28 +106,29 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(
                     width: 280.w,
                     child: TextFormField(
-                      decoration: InputDecoration(
+                      controller: usernameC,
+                      decoration: const InputDecoration(
                         border: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1,
-                            )),
+                          color: Colors.white,
+                          width: 1,
+                        )),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1,
-                            )),
+                          color: Colors.white,
+                          width: 1,
+                        )),
                         enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1,
-                            )),
-                        hintText: 'Enter your full name',
+                          color: Colors.white,
+                          width: 1,
+                        )),
+                        hintText: 'Enter your Full Name',
                         hintStyle: TextStyle(
                           color: Colors.white38,
                         ),
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                       cursorColor: Colors.white,
@@ -132,24 +140,25 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(
                     width: 280.w,
                     child: TextFormField(
+                      controller: passwordC,
                       decoration: InputDecoration(
                         border: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1.w,
-                            )),
+                          color: Colors.white,
+                          width: 1.w,
+                        )),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1.w,
-                            )),
-                        enabledBorder: UnderlineInputBorder(
+                          color: Colors.white,
+                          width: 1.w,
+                        )),
+                        enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1,
-                            )),
+                          color: Colors.white,
+                          width: 1,
+                        )),
                         hintText: 'Enter your 6-15 digit password',
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: Colors.white38,
                         ),
                         suffixIcon: IconButton(
@@ -160,14 +169,12 @@ class _SignupScreenState extends State<SignupScreen> {
                           },
                           icon: Icon(
                             size: 20,
-                            ispasswordvisible
-                                ? Icons.visibility_off
-                                : Icons.visibility,
+                            ispasswordvisible ? Icons.visibility_off : Icons.visibility,
                             color: Colors.white,
                           ),
                         ),
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                       cursorColor: Colors.white,
@@ -183,21 +190,21 @@ class _SignupScreenState extends State<SignupScreen> {
                       decoration: InputDecoration(
                         border: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1.w,
-                            )),
+                          color: Colors.white,
+                          width: 1.w,
+                        )),
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1.w,
-                            )),
-                        enabledBorder: UnderlineInputBorder(
+                          color: Colors.white,
+                          width: 1.w,
+                        )),
+                        enabledBorder: const UnderlineInputBorder(
                             borderSide: BorderSide(
-                              color: Colors.white,
-                              width: 1,
-                            )),
+                          color: Colors.white,
+                          width: 1,
+                        )),
                         hintText: 'Enter your 6-15 digit password again',
-                        hintStyle: TextStyle(
+                        hintStyle: const TextStyle(
                           color: Colors.white38,
                         ),
                         suffixIcon: IconButton(
@@ -208,26 +215,36 @@ class _SignupScreenState extends State<SignupScreen> {
                           },
                           icon: Icon(
                             size: 20,
-                            ispasswordvisibleTwo
-                                ? Icons.visibility_off
-                                : Icons.visibility,
+                            ispasswordvisibleTwo ? Icons.visibility_off : Icons.visibility,
                             color: Colors.white,
                           ),
                         ),
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                       ),
                       cursorColor: Colors.white,
                       obscureText: ispasswordvisibleTwo,
                     ),
                   ),
-
                   SizedBox(
                     height: 40.h,
                   ),
-                  CustomButton(txt: 'Register', onTap: (){},),
-
+                  CustomButton(
+                    txt: 'Register',
+                    onTap: () async {
+                      var uid = const Uuid().v4();
+                      await locator.get<AuthProvider>().registerUser(
+                              userAuthResponse: UserAuthResponse(
+                            deviceToken: deviceToken,
+                            email: emailC.text,
+                            password: passwordC.text,
+                            isAccountVerified: false,
+                            userId: uid,
+                            username: usernameC.text,
+                          ));
+                    },
+                  ),
                   SizedBox(
                     height: 20.h,
                   ),
@@ -245,12 +262,18 @@ class _SignupScreenState extends State<SignupScreen> {
                       SizedBox(
                         width: 5.w,
                       ),
-                      Text(
-                        'Login',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14.sp,
+                      InkWell(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+                        },
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14.sp,
+                          ),
                         ),
                       ),
                     ],
@@ -261,14 +284,12 @@ class _SignupScreenState extends State<SignupScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-
                       SizedBox(
                           height: 24.0,
                           width: 24.0,
                           child: Theme(
                             data: ThemeData(
-                              unselectedWidgetColor:
-                              Colors.white60, // Your color
+                              unselectedWidgetColor: Colors.white60, // Your color
                             ),
                             child: Checkbox(
                                 shape: RoundedRectangleBorder(
@@ -304,7 +325,7 @@ class _SignupScreenState extends State<SignupScreen> {
     print("Handle Rember Me");
     _isChecked = value!;
     SharedPreferences.getInstance().then(
-          (prefs) {
+      (prefs) {
         prefs.setBool("remember_me", value);
         prefs.setString('email', emailC.text);
         prefs.setString('password', passwordC.text);
