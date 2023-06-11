@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:jawa_eye/models/user_auth_response.dart';
 import 'package:jawa_eye/providers/api_client.dart';
