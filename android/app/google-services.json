@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "438117963269",
+    "project_id": "crypton-c5356",
+    "storage_bucket": "crypton-c5356.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438117963269:android:1d44c92a2c7a00412b6e6c",
+        "android_client_info": {
+          "package_name": "com.example.jawa_eye"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "438117963269-mgofvr1492539aqf644rgpd3d51gpldg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcmjy7DWeGt4EZeVM7lvqo4RLqJHWJIUw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "438117963269-mgofvr1492539aqf644rgpd3d51gpldg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

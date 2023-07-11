@@ -3,8 +3,6 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:jawa_eye/Constant/color.dart';
 import 'package:jawa_eye/Screens/BottomNavigationBar/HomeScreen/home_screen.dart';
 import 'package:jawa_eye/Screens/BottomNavigationBar/UserProfile/user_profile.dart';
-import 'package:jawa_eye/Screens/LoginScreen/login_screen.dart';
-import 'package:jawa_eye/Screens/SignupScreen/signup_screen.dart';
 
 import 'WatchMovies/watch_movies.dart';
 
@@ -32,7 +30,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
   List<Widget> _children = [
     HomeScreen(),
-    WatchMovies(),
     UserProfileScreen(),
   ];
   @override
@@ -45,11 +42,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
 
             Icon(
               Icons.home,
-              size: 30,
-              color: Colors.white,
-            ),
-            Icon(
-              Icons.emergency_recording_rounded,
               size: 30,
               color: Colors.white,
             ),
